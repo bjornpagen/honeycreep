@@ -1,2 +1,2 @@
 # honeycreep
-A proof-of-concept ebook downloading framework
+A proof-of-concept ebook downloading script
