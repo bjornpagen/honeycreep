@@ -3,7 +3,6 @@
 import sys, os, argparse, textwrap
 from getters import *
 
-
 def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,

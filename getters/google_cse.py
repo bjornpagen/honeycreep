@@ -4,7 +4,7 @@ import urllib
 
 class GoogleCSE:
 
-    def __init__(self,
+    def __init__(self, cse_id, api_key):
 
     def google_search(search_term, **kwargs):
         service = build("customsearch", "v1", developerKey=api_key)
@@ -12,7 +12,7 @@ class GoogleCSE:
         return res['items']
 
     def pdf_search(search_term):
-        return google_search("".join((search_term, " file:pdf")))
+        return google_search("".join((search_term, " filetype:pdf")))
 
     def pdf_shear(books): 
         newbooks = []
