@@ -1,6 +1,8 @@
 #!/bin/env python3
 
 import sys, os, argparse, textwrap
+from urllib.request import urlopen
+
 from getters import *
 
 def main():
@@ -26,6 +28,18 @@ def main():
     parser.add_argument("-d", "--dir", metavar="DIR", type=str, help="dir to download books", default = os.getcwd())
 
     args = parser.parse_args()
+
+    def download_file(download_url, pdf_name):
+        try:
+            web_file = urlopen(download_url)
+            local_file = open(pdf_name, 'wb')
+            local_file.write(web_file.read())
+            web_file.close()
+            local_file.close()
+        except:
+            print("Unable to download file...")
+        else:
+            print("Success!")
 
 if __name__ == "__main__":
     try: 
