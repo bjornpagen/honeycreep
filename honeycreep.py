@@ -3,8 +3,6 @@
 import sys, os, argparse, textwrap
 from urllib.request import urlopen
 
-from getters import *
-
 def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,
