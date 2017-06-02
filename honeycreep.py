@@ -2,6 +2,7 @@
 
 import sys, os, argparse, textwrap
 from urllib.request import urlopen
+from getters import *
 
 def main():
     parser = argparse.ArgumentParser(
@@ -26,6 +27,8 @@ def main():
     parser.add_argument("-d", "--dir", metavar="DIR", type=str, help="dir to download books", default = os.getcwd())
 
     args = parser.parse_args()
+
+    if args.e:
 
     def download_file(download_url, pdf_name):
         try:
