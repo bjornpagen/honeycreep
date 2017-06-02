@@ -1,7 +1,8 @@
 from googleapiclient.discovery import build
 
-class googleCSE:
-    def __init__(self, cse_id, api_key):
+
+class GoogleCSE:
+    def __init__(self, cse_id, api_key, search_term):
         self.cse_id = cse_id
         self.api_key = api_key
 

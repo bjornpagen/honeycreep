@@ -1,10 +1,17 @@
 #!/bin/env python3
 
-import sys, os, argparse, textwrap
+import sys, os, argparse, textwrap, configparser
 from urllib.request import urlopen
-from getters import *
+from getters import google_cse
 
 def main():
+    # TODO: implement ConfigParser and make it generally work
+
+    title = None
+    engine = "googleCSE"
+    cse_id = ""
+
+
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description=textwrap.dedent('''
@@ -21,14 +28,19 @@ def main():
     )
 
     parser.add_argument("t", metavar="NAME_OF_BOOK", type=str, help="title of the desired book")
-    parser.add_argument("-e", "--engine", metavar="NAME_OF_ENGINE", type=str, help="method of downloading books")
+    parser.add_argument("-e", "--engine", metavar="NAME_OF_ENGINE", type=str, help="method of downloading books",
+                        default="googleCSE")
     parser.add_argument("-c", "--cse-id", metavar="CSE_ID", type=str, help="custom cse id for google")
     parser.add_argument("-a", "--api-key", metavar="API_KEY", type=str, help="custom api key for google")
     parser.add_argument("-d", "--dir", metavar="DIR", type=str, help="dir to download books", default = os.getcwd())
 
     args = parser.parse_args()
 
-    if args.e:
+    # create configuration file
+
+    getter = None
+    if args.e == "googleCSE":
+        getter = google_cse.GoogleCSE(args.c, args.a, args.t)
 
     def download_file(download_url, pdf_name):
         try:
