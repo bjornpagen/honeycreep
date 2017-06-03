@@ -11,7 +11,6 @@ def main():
     engine = "googleCSE"
     cse_id = ""
 
-
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description=textwrap.dedent('''
