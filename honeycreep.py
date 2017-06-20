@@ -21,37 +21,45 @@ def main():
         epilog=textwrap.dedent('''
         "The only way to deal with an unfree world is to become so absolutely
         free that your very existence is an act of rebellion." - Albert Camus
-
             -created by bjornpagenatgmaildotcom
         ''')
     )
+    
+    parser.add_argument("t", metavar="NAME_OF_BOOK", type=str,
+            help="title of the desired book")
+    parser.add_argument("-d", "--dir", metavar="DIR", type=str,
+            help="dir to download books", default = os.getcwd())
 
-    parser.add_argument("t", metavar="NAME_OF_BOOK", type=str, help="title of the desired book")
-    parser.add_argument("e", metavar="NAME_OF_ENGINE", type=str, help="method of downloading books",
-                        default="googleCSE")
-    parser.add_argument("-c", "--cse-id", metavar="CSE_ID", type=str, help="custom cse id for google")
-    parser.add_argument("-a", "--api-key", metavar="API_KEY", type=str, help="custom api key for google")
-    parser.add_argument("-d", "--dir", metavar="DIR", type=str, help="dir to download books", default = os.getcwd())
+    group_google_cse = parser.add_argument_group()
+    group_google_cse.add_argument("c", metavar="CSE_ID",
+            type=str, help="custom cse id for google")
+    group_google_cse.add_argument("a", metavar="API_KEY",
+            type=str, help="custom api key for google")
 
     args = parser.parse_args()
 
-    # create configuration file
+    # create/read from configuration file
 
-    getter = None
-    if args.e == "googleCSE":
-        getter = google_cse.GoogleCSE(args.c, args.a, args.t)
+    getter = google_cse.GoogleCSE(args.c, args.a, args.t)
+    getter.get_google_dump()
+    book_list = getter.get()
 
-    def download_file(download_url, pdf_name):
-        try:
-            web_file = urlopen(download_url)
-            local_file = open(pdf_name, 'wb')
-            local_file.write(web_file.read())
-            web_file.close()
-            local_file.close()
-        except:
-            print("Unable to download file...")
-        else:
-            print("Success!")
+    for book in book_list:
+        print("hi")
+        download_file(book[0],book[1])
+
+def download_file(pdf_name, download_url):
+    try:
+        print("Downloading " + pdf_name)
+        web_file = urlopen(download_url)
+        local_file = open(pdf_name, 'wb')
+        local_file.write(web_file.read())
+        web_file.close()
+        local_file.close()
+    except:
+        print("Unable to download file...")
+    else:
+        print("Success!")
 
 if __name__ == "__main__":
     try:
